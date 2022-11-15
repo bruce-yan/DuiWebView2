@@ -1,5 +1,17 @@
 ﻿// dllmain.cpp : 定义 DLL 应用程序的入口点。
 #include "pch.h"
+#include "duiwebview2.h"
+#include "../inc/Webview2UI.h"
+
+DuiLib::CControlUI* CreateControl(LPCTSTR pstrType)
+{
+    if (!pstrType) return NULL;
+
+    if (_tcsicmp(pstrType, _T("WebView2")) == 0) {
+        return new DuiLib::CWebview2UI();
+    }
+    return NULL;
+}
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,

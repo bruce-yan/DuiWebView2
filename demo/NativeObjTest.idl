@@ -1,0 +1,24 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[uuid(8407C448-6F6E-4944-914B-FA8E231E1C17), version(0.1)]
+library NativeObjLibrary
+{
+    //! [AddHostObjectInterface]
+    [uuid(D8B29CEA-4162-4D88-AFDA-B601D88A45F8), object, local]
+    interface INativeObj : IUnknown
+    {
+        [propget] HRESULT Info([out, retval] BSTR* pVal);
+        [propput] HRESULT Info([in] BSTR val);
+
+        HRESULT Add([in] long param1, [in] long param2, [out, retval] long *pRet);
+    };
+    //! [AddHostObjectInterface]
+
+    [uuid(357548E7-EEF9-4BC4-B9AE-3DBA981DD8CD)]
+    coclass NativeObj
+    {
+        [default] interface INativeObj;
+        interface IDispatch;
+    };
+}
