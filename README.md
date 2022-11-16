@@ -13,6 +13,7 @@ demo            使用事例
 bin\nativeweb   本地测试网页
 bin\skin        duilib界面资源
 webview2.xml    文件中描述了 Webview2 控件支持的属性和事件
+inc             控件头文件
 ```
 ### 环境配置
 1.  VS2022
