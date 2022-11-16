@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Window size="1280,720" sizebox="4,4,6,6" caption="0,0,0,64" mininfo="800,570" roundcorner="5,5" showdirty="false" title="Webview2 Demo" >
+	<Font shared="true" id="0" name="微软雅黑" size="14" bold="false" />
+	<Container>
+    	<VerticalLayout inset="4,0,4,4" bkcolor="#FF60B1FE" bordercolor="#FF1B4876" bordersize="1" borderround="5,5">
+    		<Control height="1" bkcolor="#FF1B4876" />
+    		<Control height="2" bkcolor="#FFD1EDFF" />
+    		<HorizontalLayout height="32" bkcolor="#FF8DD3FF" bkcolor2="#FF60B1FE">
+    			<VerticalLayout width="200">
+    				<Text text="Webview2 Demo"/>
+    			</VerticalLayout>
+				<Control />
+    			<HorizontalLayout width="94" >
+    				<Button name="minbtn" maxwidth="26" maxheight="18" normalimage="file='frame_btn_min.bmp' source='0,0,26,18' mask='#FFFF00FF'" hotimage="file='frame_btn_min.bmp' source='26,0,52,18' mask='#FFFF00FF'" pushedimage="file='frame_btn_min.bmp' source='52,0,78,18' mask='#FFFF00FF'"/>
+    				<Button name="maxbtn" maxwidth="26" maxheight="18" normalimage="file='frame_btn_max.bmp' source='0,0,26,18' mask='#FFFF00FF'" hotimage="file='frame_btn_max.bmp' source='26,0,52,18' mask='#FFFF00FF'" pushedimage="file='frame_btn_max.bmp' source='52,0,78,18' mask='#FFFF00FF'"/>
+    				<Button name="restorebtn" visible="false" maxwidth="26" maxheight="18" normalimage="file='frame_btn_max.bmp' source='104,0,130,18' mask='#FFFF00FF'" hotimage="file='frame_btn_max.bmp' source='130,0,156,18' mask='#FFFF00FF'" pushedimage="file='frame_btn_max.bmp' source='156,0,182,18' mask='#FFFF00FF'" />
+    				<Button name="closebtn" maxwidth="42" maxheight="18" normalimage="file='frame_btn_close_normal.bmp' mask='#FFFF00FF'" hotimage="file='frame_btn_close_hot.bmp' mask='#FFFF00FF'" pushedimage="file='frame_btn_close_down.bmp' mask='#FFFF00FF'"/>
+    			</HorizontalLayout>
+    		</HorizontalLayout>
+    		<Control height="2" />
+    		<HorizontalLayout height="32" inset="20,4,0,1" childpadding="0" bkimage="tab_back.bmp" >
+    			<Option name="mainswitch" text="百度" width="160" selected="true" group="swithbar" align="center" normalimage="file='tab_normal.bmp' corner='2,2,2,2'" selectedimage="file='tab_select.bmp' corner='2,2,2,2'" hotimage="file='tab_hot.bmp' corner='2,2,2,2'" hottextcolor="#CC1010"/>
+				<Option name="testswitch" text="测试" width="160" group="swithbar" align="center" normalimage="file='tab_normal.bmp' corner='2,2,2,2'" selectedimage="file='tab_select.bmp' corner='2,2,2,2'" hotimage="file='tab_hot.bmp' corner='2,2,2,2'" hottextcolor="#CC1010" />
+    		</HorizontalLayout>			
+			<TabLayout name="content" bkcolor="0xFFFFFFFF">
+				<Webview2 name="mainview" homepage="https://baidu.com" contextMenusEnabled="true" bkcolor="0xFFFFFFFF"/>
+				<Webview2 name="testview" homepage="https://native.test/test.html" contextMenusEnabled="true" bkcolor="0xFFFFFFFF" />
+			</TabLayout>
+		</VerticalLayout>
+    </Container>
+</Window>

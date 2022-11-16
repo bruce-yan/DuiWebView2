@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>测试</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <meta http-equiv="Content-Language" content="zh-cn">
+        <script>
+            //接收Host发来的消息
+            window.chrome.webview.addEventListener('message', arg => {
+                let eventInfo = JSON.stringify(arg.data);
+                console.log(eventInfo);
+            });
+
+            function scriptFunction(a, b) {
+                window.alert(a + b);
+            }
+
+            //测试1
+            function OnTest1(){
+                let cmd = {'cmd':'hello'}
+    			window.chrome.webview.postMessage(JSON.stringify(cmd));		                
+            }
+
+            //测试2
+            function OnTest2(){
+                let s = chrome.webview.hostObjects.sync.NativeObj.Add(1,2);
+                chrome.webview.hostObjects.sync.NativeObj.info = '哈哈哈';
+                window.alert("NativeObj.Add res = " + s.toString() + "\nNativeObj.info = " + chrome.webview.hostObjects.sync.NativeObj.info);
+            }            
+
+            //测试3
+            function OnTest3(){
+                //让Host调用scriptFunction函数
+                let cmd = {'cmd':'runscript'}
+    			window.chrome.webview.postMessage(JSON.stringify(cmd));		
+            }
+        </script>
+    </head>
+    <body>
+		<p><h3>可在 DevTools 的 Console 里查看Host向Web发送的消息</h3></p>
+        <p>
+            <h4>测试1: 向Host发送消息</h4>
+            <button onclick="OnTest1()">测试1</button>
+		</p>
+        <p>
+            <h4>测试2: 调用 Native 对象</h4>
+            <button onclick="OnTest2()">测试2</button>
+		</p>
+        <p>
+            <h4>测试3: 让Host调用JavaScript函数</h4>
+            <button onclick="OnTest3()">测试3</button>
+		</p>
+    </body>
+</html>
