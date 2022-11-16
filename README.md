@@ -61,3 +61,6 @@ FrameNavigationCompleted|ICoreWebView2* msg.wParam<br/>ICoreWebView2NavigationCo
 3. 理论上win10之后（含win10）的系统默认都安装了webview2
 
 ### Demo 效果
+![界面1](https://gitee.com/bruce_code/duiwebview2/raw/master/docimg/demo1.png)\
+
+![界面2](https://gitee.com/bruce_code/duiwebview2/raw/master/docimg/demo2.png)
