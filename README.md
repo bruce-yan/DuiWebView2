@@ -27,6 +27,80 @@ CPaintManagerUI::LoadPlugin(_T("duiwebview2.dll"));
 ```
 <Webview2 name="mainview" homepage="https://baidu.com" bkcolor="0xFFFFFFFF"/>
 ```
+### 网页向Host发送消息
+<font color="#dd0000">需将 webMessageEnabled 设为 "true"</font>
+```
+function OnTest1(){
+    let cmd = {'cmd':'hello'}
+    window.chrome.webview.postMessage(JSON.stringify(cmd));		                
+}
+```
+### 网页接收Host的消息
+<font color="#dd0000">需将 webMessageEnabled 设为 "true"</font>
+```
+window.chrome.webview.addEventListener('message', arg => {
+    let eventInfo = JSON.stringify(arg.data);
+    console.log(eventInfo);
+});
+```
+
+### Host接收网页消息
+在 Notify(TNotifyUI& msg) 的 WebMessageReceived 事件中处理
+```
+if (msg.sType == _T("WebMessageReceived")) {
+    ICoreWebView2* webview = reinterpret_cast<ICoreWebView2*>(msg.wParam);
+    ICoreWebView2WebMessageReceivedEventArgs* args = reinterpret_cast<ICoreWebView2WebMessageReceivedEventArgs*>(msg.lParam);
+    wil::unique_cotaskmem_string message;
+    CHECK_FAILURE(args->TryGetWebMessageAsString(&message));
+    //将unicode转为utf8
+    auto msg = g_conv.to_bytes(message.get());
+    try {
+        auto cmdObj = json::parse(msg);
+        auto cmd = cmdObj["cmd"].get<std::string>();
+        if (cmd.compare("hello") == 0){
+            webview->PostWebMessageAsJson(LR"({"cmd":"hello-response"})");
+        }
+        else if (cmd.compare("runscript") == 0) {
+            m_pWebTest->ExecuteScript(LR"(scriptFunction(5,11);)", NULL);
+        }
+    }
+    catch (std::exception& e) {
+        ATLTRACE("%s\n", e.what());
+    }
+}
+
+```
+
+### Host向网页发送消息
+```
+//webview 为 ICoreWebView2 接口指针
+webview->PostWebMessageAsJson(LR"({"cmd":"hello-response"})");
+```
+### 设置本地目录的虚拟映射表
+如果想访问本地目录的网页，可以设置虚拟映射表
+```
+auto wv2 = static_cast<DuiLib::CWebview2UI*>(msg.pSender);
+wil::com_ptr<ICoreWebView2> webView = wv2->GetWebView2();
+//为本地网页目录添加资源映射
+wil::com_ptr<ICoreWebView2_3> webView2_3;
+webView2_3 = webView.try_query<ICoreWebView2_3>();
+if (webView2_3)
+{
+    //这样就可以用 https://native.test/test.html 访问本地网页了
+    webView2_3->SetVirtualHostNameToFolderMapping(
+        L"native.test", L"..\\..\\nativeweb",
+        COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND_DENY_CORS);
+}
+```
+
+### 注入本地对象供javascript调用
+NativeObj为c++实现的双接口本地对象,具体可查看Demo的实现\
+我使用了一种简单的方法，并不标准
+```
+auto wv2 = static_cast<DuiLib::CWebview2UI*>(msg.pSender);
+wv2->InjectObjectToScript<NativeObj>();
+```
+
 ### 主要属性
 属性|类型|默认值|说明
 -----|:-----:|:-----:|----------
