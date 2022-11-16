@@ -1,7 +1,8 @@
 # duiwebview2
 
 ### 介绍
-Webview2 的 Duilib插件\
+WebView2 Duilib 插件\
+本项目实现对 Webview2 封装, 以便能在duilib中调用WebView2的功能\
 [Webview2](https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/) 是微软推出的 基于 Chromium 的Web控件。\
 与 CEF 相比的优势：在Win10（包含）之后随系统发布，不需要再随应用一起分发，这样可以有效减少应用安装包的大小，并可随微软官方补丁更新。
 
